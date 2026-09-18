@@ -7,11 +7,10 @@ import static org.studies.DataSource.fetchData;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-//        List<Item> produtos = fetchData();
-//
-//        for(Item item : produtos) {
-//            System.out.println(item.getNome());
-//        }
+        List<Item> produtos = fetchData();
 
+        for(Item item : produtos) {
+            System.out.println(item.getNome());
+        }
     }
 }

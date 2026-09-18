@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS stok (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(200),
+    amount NUMERIC(10,2) NOT NULL,
+    code VARCHAR(15) NOT NULL UNIQUE CHECK (length(code) = 15),
+    quantity INTEGER NOT NULL DEFAULT 0 CHECK (quantity >= 0)
+);
