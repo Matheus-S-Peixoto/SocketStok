@@ -9,24 +9,27 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.util.concurrent.Executors.newFixedThreadPool;
+
 public class EchoServerPool {
     private static final int PORT = 3030;
 
     public static void main(String[] args) {
-        ExecutorService threadPool = Executors.newFixedThreadPool(4);
+        try (ExecutorService threadPool = newFixedThreadPool(4)) {
 
-        try (ServerSocket listener = new ServerSocket(PORT)) {
-            System.out.println("Listening on port: " + PORT);
+            try (ServerSocket listener = new ServerSocket(PORT)) {
+                System.out.println("Listening on port: " + PORT);
 
-            while (true) {
-                Socket newClient = listener.accept();
-                System.out.println();
-                System.out.println("Novo cliente: " + newClient.getRemoteSocketAddress());
+                while (true) {
+                    Socket newClient = listener.accept();
+                    System.out.println();
+                    System.out.println("Novo cliente: " + newClient.getRemoteSocketAddress());
 
-                threadPool.execute(new HandleClient(newClient));
+                    threadPool.execute(new HandleClient(newClient));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
