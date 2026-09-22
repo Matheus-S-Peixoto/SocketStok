@@ -21,6 +21,7 @@ public class Server {
         try (ExecutorService threadPool = newFixedThreadPool(10)) {
             try (ServerSocket listener = new ServerSocket(PORT)) {
                 System.out.println("Listening on port: " + PORT);
+                //noinspection InfiniteLoopStatement
                 while(true) {
                     Socket client = listener.accept();
 

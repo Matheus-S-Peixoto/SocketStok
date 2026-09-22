@@ -1,30 +1,45 @@
 package org.stok.Protocol;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 
 public class ProtocolParser {
-    private static final ObjectMapper objMapper = new ObjectMapper();
+    private final ObjectMapper objMapper;
 
-    static {
+    public ProtocolParser() {
+        this.objMapper = new ObjectMapper();
+
         objMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        objMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
+        objMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static JsonNode jsonToNode(String req) throws JsonProcessingException {
+    protected JsonNode jsonToNode(String req) throws JsonProcessingException {
         return objMapper.readTree(req);
     }
 
-    public static <A> A nodeToClass(JsonNode node, Class<A> req) throws JsonProcessingException {
+    protected <A> A nodeToClass(JsonNode node, Class<A> req) throws JsonProcessingException {
         return objMapper.treeToValue(node, req);
     }
 
-    public static JsonNode classToNode(Object res) {
+    protected JsonNode classToNode(Object res) {
         return objMapper.valueToTree(res);
     }
 
-    public static String nodeToJson(JsonNode node) throws JsonProcessingException {
+    protected String nodeToJson(JsonNode node) throws JsonProcessingException {
         ObjectWriter objWritter = objMapper.writer();
 //        objWritter = objWritter.with(SerializationFeature.INDENT_OUTPUT);
         return objWritter.writeValueAsString(node);
+    }
+
+    public <A> A parseRequest(String reqJson, Class<A> reqClass) throws JsonProcessingException {
+        JsonNode reqNode = jsonToNode(reqJson);
+        return nodeToClass(reqNode, reqClass);
+    }
+
+    public String parseResponse(Object resObj) throws JsonProcessingException {
+        JsonNode resNode = classToNode(resObj);
+        return nodeToJson(resNode);
     }
 }

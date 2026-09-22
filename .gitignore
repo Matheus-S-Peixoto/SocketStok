@@ -40,6 +40,7 @@ build/
 /src/main/java/org/studies/project
 /src/main/java/org/studies/img.png
 /src/main/java/org/studies/
+/src/main/java/org/studies/*
 
 ### Environment Variables  ###
 .env
