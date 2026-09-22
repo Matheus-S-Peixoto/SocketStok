@@ -1,5 +1,6 @@
 package org.stok.server;
 
+import org.stok.Protocol.ProtocolException;
 import org.stok.Protocol.ProtocolParser;
 import org.stok.Protocol.ValidateRequest;
 import org.stok.Protocol.request.Request;
@@ -9,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ProtocolException;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
@@ -42,7 +42,7 @@ public class ClientHandler implements Runnable {
                 validator.validateRequest(req);
 
             }
-        } catch (ProtocolException e){
+        } catch (ProtocolException e) {
 
         } catch (IOException e) {
             System.out.println("Comunication error with client " + e.getMessage());
