@@ -1,6 +1,10 @@
 package org.stok.protocol.response;
 
+import org.stok.model.Product;
+import org.stok.service.StokService;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ResponseData {
     private Integer id;
@@ -9,6 +13,25 @@ public class ResponseData {
     private BigDecimal amount;
     private String code;
     private Integer quantity;
+
+    public Object parseServiceResult(Object serviceResult) {
+        if(serviceResult instanceof List<?> productList) {
+            return productList;
+        } else if (serviceResult instanceof Product product) {
+            ResponseData resData = new ResponseData();
+
+            resData.setId(product.getId());
+            resData.setName(product.getName());
+            resData.setDescription(product.getDescription());
+            resData.setAmount(product.getAmount());
+            resData.setCode(product.getCode());
+            resData.setQuantity(product.getQuantity());
+
+            return resData;
+        } else {
+            return null;
+        }
+    }
 
     public Integer getId() {
         return id;

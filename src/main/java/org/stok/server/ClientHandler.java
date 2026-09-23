@@ -45,8 +45,10 @@ public class ClientHandler implements Runnable {
 
                     validator.validateRequest(req);
 
-                    Object serviceReturn = service.handleRequest(req);
+                    Object serviceResult = service.handleRequest(req);
 
+                    Response res = Response.success(req.getAction(), serviceResult);
+                    output.println(parser.parseResponse(res));
                 } catch (ProtocolException e) {
                     Response res = Response.error(e.getCode(), e.getMessage());
                     output.println(parser.parseResponse(res));
