@@ -1,21 +1,16 @@
-package org.stok.Protocol.pojo;
+package org.stok.protocol.request;
 
 import java.math.BigDecimal;
 
-public class ResDataExample {
-    private Integer id;
+public class RequestBody {
     private String name;
     private String description;
     private BigDecimal amount;
     private String code;
     private Integer quantity;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public boolean isEmpty() {
+        return (getName() == null) && (getDescription() == null) && (getAmount() == null) && (getCode() == null) && (getQuantity() == null);
     }
 
     public String getName() {

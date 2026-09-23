@@ -1,7 +1,7 @@
-package org.stok.Protocol;
+package org.stok.protocol;
 
 import org.jspecify.annotations.NonNull;
-import org.stok.Protocol.request.Request;
+import org.stok.protocol.request.Request;
 
 public class ValidateRequest {
     public void validateRequest(@NonNull Request req) throws ProtocolException {

@@ -1,4 +1,4 @@
-package org.stok.Protocol;
+package org.stok.protocol;
 
 public class ProtocolException extends Exception {
     private final ResponseCodes code;

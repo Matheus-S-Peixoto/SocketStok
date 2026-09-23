@@ -1,10 +1,12 @@
 package org.stok.server;
 
-import org.stok.Protocol.ProtocolException;
-import org.stok.Protocol.ProtocolParser;
-import org.stok.Protocol.ValidateRequest;
-import org.stok.Protocol.request.Request;
-import org.stok.service.Service;
+import org.stok.protocol.ProtocolException;
+import org.stok.protocol.ProtocolParser;
+import org.stok.protocol.ValidateRequest;
+import org.stok.protocol.request.Request;
+import org.stok.protocol.response.Response;
+import org.stok.protocol.response.ResponseData;
+import org.stok.service.StokService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,11 +16,11 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     private final Socket client;
-    private final Service service;
+    private final StokService service;
     private final ProtocolParser parser;
     private final ValidateRequest validator;
 
-    public ClientHandler(Socket newClient, Service newService) {
+    public ClientHandler(Socket newClient, StokService newService) {
         this.client = newClient;
         this.service = newService;
         this.parser = new ProtocolParser();
@@ -37,13 +39,15 @@ public class ClientHandler implements Runnable {
             String jsonRequest;
 
             while ((jsonRequest = input.readLine()) != null) {
-                Request req = parser.parseRequest(jsonRequest, Request.class);
+                try {
+                    Request req = parser.parseRequest(jsonRequest, Request.class);
 
-                validator.validateRequest(req);
-
+                    validator.validateRequest(req);
+                } catch (ProtocolException e) {
+                    Response res = Response.error(e.getCode(), e.getMessage());
+                    output.println(parser.parseResponse(res));
+                }
             }
-        } catch (ProtocolException e) {
-
         } catch (IOException e) {
             System.out.println("Comunication error with client " + e.getMessage());
         }

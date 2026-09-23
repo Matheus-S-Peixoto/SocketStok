@@ -20,6 +20,10 @@ public class DataSource {
         config.setUsername(System.getenv("PG_USERNAME"));
         config.setPassword((System.getenv("PG_PASSWORD")));
 
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
         ds = new HikariDataSource(config);
     }
 

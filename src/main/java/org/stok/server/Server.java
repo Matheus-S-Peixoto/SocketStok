@@ -1,6 +1,6 @@
 package org.stok.server;
 
-import org.stok.service.Service;
+import org.stok.service.StokService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,9 +11,9 @@ import static java.util.concurrent.Executors.newFixedThreadPool;
 
 public class Server {
     private static final int PORT = Integer.parseInt(System.getenv("SERVER_PORT"));
-    private final Service service;
+    private final StokService service;
 
-    public Server(Service service) {
+    public Server(StokService service) {
         this.service = service;
     }
 

@@ -1,4 +1,4 @@
-package org.stok.Protocol;
+package org.stok.protocol;
 
 public enum Actions {
     P_CREATE,

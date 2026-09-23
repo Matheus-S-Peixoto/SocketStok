@@ -1,16 +1,15 @@
-package org.stok.Protocol.request;
+package org.stok.protocol.pojo;
 
-import org.stok.Protocol.Actions;
+import org.stok.protocol.Actions;
 
-public class Request {
+public class RequestExemple {
     private Actions action;
     private Integer id;
-    private Body body;
+    private BodyExemple body;
 
     public Actions getAction() {
         return action;
     }
-
     public void setAction(Actions action) {
         this.action = action;
     }
@@ -18,16 +17,14 @@ public class Request {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public Body getBody() {
+    public BodyExemple getBody() {
         return body;
     }
-
-    public void setBody(Body body) {
+    public void setBody(BodyExemple body) {
         this.body = body;
     }
 }

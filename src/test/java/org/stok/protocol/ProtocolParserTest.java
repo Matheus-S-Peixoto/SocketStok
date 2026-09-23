@@ -1,12 +1,12 @@
-package org.stok.Protocol;
+package org.stok.protocol;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.Test;
-import org.stok.Protocol.pojo.CompleteResponseExemple;
-import org.stok.Protocol.pojo.RequestExemple;
-import org.stok.Protocol.pojo.ResDataExample;
-import org.stok.Protocol.pojo.ResponseExemple;
+import org.stok.protocol.pojo.CompleteResponseExemple;
+import org.stok.protocol.pojo.RequestExemple;
+import org.stok.protocol.pojo.ResDataExample;
+import org.stok.protocol.pojo.ResponseExemple;
 
 import java.math.BigDecimal;
 

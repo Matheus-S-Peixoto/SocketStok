@@ -1,4 +1,4 @@
-package org.stok.Protocol.pojo;
+package org.stok.protocol.pojo;
 
 public class CompleteResponseExemple {
     private int statusCode;
