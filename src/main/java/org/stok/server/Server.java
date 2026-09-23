@@ -18,19 +18,19 @@ public class Server {
     }
 
     public void start() {
-        try (ExecutorService threadPool = newFixedThreadPool(10)) {
-            try (ServerSocket listener = new ServerSocket(PORT)) {
-                System.out.println("Listening on port: " + PORT);
-                //noinspection InfiniteLoopStatement
-                while(true) {
-                    Socket client = listener.accept();
+        try (ServerSocket listener = new ServerSocket(PORT);
+             ExecutorService threadPool = newFixedThreadPool(10)) {
 
-                    threadPool.execute(new ClientHandler(client, service));
-                }
+            System.out.println("Listening on port: " + PORT);
 
-            } catch(IOException e) {
-                e.printStackTrace();
+            while(true) {
+                Socket client = listener.accept();
+
+                threadPool.execute(new ClientHandler(client, service));
             }
+
+        } catch(IOException e) {
+            System.err.println("Failed to start server: " + e.getMessage());
         }
     }
 }

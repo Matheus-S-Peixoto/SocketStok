@@ -1,13 +1,13 @@
 package org.stok.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.stok.exceptions.ProtocolException;
+import org.stok.exceptions.ResponseCodes;
 import org.stok.exceptions.ServiceException;
-import org.stok.model.Product;
 import org.stok.protocol.ProtocolParser;
 import org.stok.protocol.ValidateRequest;
 import org.stok.protocol.request.Request;
 import org.stok.protocol.response.Response;
-import org.stok.protocol.response.ResponseData;
 import org.stok.service.StokService;
 
 import java.io.BufferedReader;
@@ -51,6 +51,9 @@ public class ClientHandler implements Runnable {
                     Response res = Response.success(req.getAction(), serviceResult);
                     output.println(parser.parseResponse(res));
 
+                } catch (JsonProcessingException e) {
+                    Response res = Response.error(ResponseCodes.INTERNAL_ERROR, "Invalid JSON Protocol");
+                    output.println(parser.parseResponse(res));
                 } catch (ProtocolException e) {
                     Response res = Response.error(e.getCode(), e.getMessage());
                     output.println(parser.parseResponse(res));

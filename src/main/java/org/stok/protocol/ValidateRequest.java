@@ -7,6 +7,11 @@ import org.stok.protocol.request.Request;
 
 public class ValidateRequest {
     public void validateRequest(@NonNull Request req) throws ProtocolException {
+
+        if (req.getAction() == null) {
+            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Invalid JSON Protocol: Null Value on 'action' field");
+        }
+
         switch (req.getAction()) {
             case P_CREATE -> validateCreateRequest(req);
             case P_INFO -> validateInfoRequest(req);
