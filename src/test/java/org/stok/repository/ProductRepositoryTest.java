@@ -1,11 +1,13 @@
 package org.stok.repository;
 
 import org.junit.jupiter.api.Test;
+import org.stok.exceptions.ServiceException;
 import org.stok.model.Product;
 import org.stok.protocol.request.RequestBody;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +15,7 @@ class ProductRepositoryTest {
     private final ProductRepository repo = new ProductRepository();
 
     @Test
-    void createProduct() throws SQLException {
+    void createProduct() throws ServiceException {
         RequestBody body = new RequestBody();
         body.setName("Amortecedor Dianteiro da Scania R520");
         body.setDescription("Amortecedor Bosche da Scania R520 2021 StreamLine");
@@ -25,6 +27,17 @@ class ProductRepositoryTest {
         System.out.println(product.getId());
         System.out.println(product.getName());
         System.out.println(product.getCode());
+    }
+
+    @Test
+    void getStok() {
+        List<Product> stok = repo.getStok();
+
+        for (Product product : stok) {
+            System.out.println(product.getId());
+            System.out.println(product.getName());
+            System.out.println(product.getAmount());
+        }
     }
 
 }

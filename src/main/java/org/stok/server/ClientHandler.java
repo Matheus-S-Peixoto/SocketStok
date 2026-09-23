@@ -1,11 +1,12 @@
 package org.stok.server;
 
-import org.stok.protocol.ProtocolException;
+import org.stok.exceptions.ProtocolException;
+import org.stok.exceptions.ServiceException;
+import org.stok.model.Product;
 import org.stok.protocol.ProtocolParser;
 import org.stok.protocol.ValidateRequest;
 import org.stok.protocol.request.Request;
 import org.stok.protocol.response.Response;
-import org.stok.protocol.response.ResponseData;
 import org.stok.service.StokService;
 
 import java.io.BufferedReader;
@@ -43,7 +44,13 @@ public class ClientHandler implements Runnable {
                     Request req = parser.parseRequest(jsonRequest, Request.class);
 
                     validator.validateRequest(req);
+
+                    Object serviceReturn = service.handleRequest(req);
+
                 } catch (ProtocolException e) {
+                    Response res = Response.error(e.getCode(), e.getMessage());
+                    output.println(parser.parseResponse(res));
+                } catch (ServiceException e) {
                     Response res = Response.error(e.getCode(), e.getMessage());
                     output.println(parser.parseResponse(res));
                 }

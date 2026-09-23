@@ -1,6 +1,8 @@
 package org.stok.protocol;
 
 import org.jspecify.annotations.NonNull;
+import org.stok.exceptions.ProtocolException;
+import org.stok.exceptions.ResponseCodes;
 import org.stok.protocol.request.Request;
 
 public class ValidateRequest {
@@ -38,7 +40,7 @@ public class ValidateRequest {
         } else if (req.getBody().getCode().length() != 15) {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Invalid code - must be a 15 character alphanumeric code");
         }
-        if (req.getBody().getQuantity() != 0 || req.getBody().getQuantity() != null) {
+        if (req.getBody().getQuantity() != null) {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Invalid field - \"quantity\" should not be initialized here");
         }
     }

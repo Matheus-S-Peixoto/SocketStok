@@ -1,6 +1,6 @@
 package org.stok.protocol.response;
 
-import org.stok.protocol.ResponseCodes;
+import org.stok.exceptions.ResponseCodes;
 
 public class Response {
     private ResponseCodes statusCode;

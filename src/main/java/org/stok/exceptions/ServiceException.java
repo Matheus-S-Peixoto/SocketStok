@@ -1,14 +1,14 @@
 package org.stok.exceptions;
 
-public class ProtocolException extends Exception {
+public class ServiceException extends Exception {
     private final ResponseCodes code;
 
-    public ProtocolException(ResponseCodes code, String message) {
+    public ServiceException(ResponseCodes code, String message) {
         super(message);
         this.code = code;
     }
 
-    public ResponseCodes getCode(){
+    public ResponseCodes getCode() {
         return this.code;
     }
 }

@@ -1,4 +1,4 @@
-package org.stok.protocol;
+package org.stok.exceptions;
 
 public enum ResponseCodes {
     OK(200),
