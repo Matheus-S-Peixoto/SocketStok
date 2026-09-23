@@ -3,10 +3,16 @@ package org.stok.protocol;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.Test;
+import org.stok.exceptions.ProtocolException;
+import org.stok.exceptions.ServiceException;
 import org.stok.protocol.pojo.CompleteResponseExemple;
 import org.stok.protocol.pojo.RequestExemple;
 import org.stok.protocol.pojo.ResDataExample;
 import org.stok.protocol.pojo.ResponseExemple;
+import org.stok.protocol.request.Request;
+import org.stok.protocol.response.Response;
+import org.stok.repository.ProductRepository;
+import org.stok.service.StokService;
 
 import java.math.BigDecimal;
 
@@ -150,5 +156,27 @@ class ProtocolParserTest {
         System.out.println(resJson);
 
         assertEquals("{\"statusCode\":200,\"message\":\"OK\",\"data\":{\"description\":\"Amortecedor dianteiro esquerdo da porche Cayenne 2012\",\"amount\":2445.99}}", resJson);
+    }
+
+    @Test
+    void parseResponseScenarioInfo() throws JsonProcessingException, ProtocolException, ServiceException {
+        String jsonRequest = "{\"action\":\"P_INFO\",\"id\":1}";
+        Request req = parser.parseRequest(jsonRequest, Request.class);
+
+        ValidateRequest validator = new ValidateRequest();
+        validator.validateRequest(req);
+
+        ProductRepository repo = new ProductRepository();
+        StokService service = new StokService(repo);
+
+        Object serviceResult = service.handleRequest(req);
+
+        Response res = Response.success(req.getAction(), serviceResult);
+
+        System.out.println(res.getData());
+        String resJson = parser.parseResponse(res);
+        System.out.println(resJson);
+
+//        assertEquals("{\"statusCode\":200,\"message\":\"OK\",\"data\":{\"description\":\"Amortecedor dianteiro esquerdo da porche Cayenne 2012\",\"amount\":2445.99}}", resJson);
     }
 }

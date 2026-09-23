@@ -18,7 +18,7 @@ public class ResponseData {
             return from(product);
         }
         if (serviceResult instanceof List<?> products) {
-            return from(products);
+            return products.stream().map(product -> from((Product) product)).toList();
         }
         return null;
     }
@@ -34,10 +34,6 @@ public class ResponseData {
         resData.setQuantity(product.getQuantity());
 
         return resData;
-    }
-
-    public static List<ResponseData> from(List<Product> products) {
-        return products.stream().map(ResponseData::from).toList();
     }
 
     public Integer getId() {

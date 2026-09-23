@@ -5,7 +5,6 @@ import org.stok.exceptions.ResponseCodes;
 import org.stok.protocol.Actions;
 
 public class Response {
-    @JsonValue
     private ResponseCodes statusCode;
     private String message;
     private Object data;
@@ -41,6 +40,7 @@ public class Response {
                 res.setMessage("Stok updated");
                 break;
         }
+
         res.setData(ResponseData.from(serviceResult));
 
         return res;

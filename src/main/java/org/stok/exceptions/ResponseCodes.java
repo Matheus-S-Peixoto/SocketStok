@@ -1,5 +1,7 @@
 package org.stok.exceptions;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ResponseCodes {
     OK(200),
     CREATED(201),
@@ -13,7 +15,7 @@ public enum ResponseCodes {
         this.code = code;
     }
 
-
+    @JsonValue
     public int getCode() {
         return code;
     }

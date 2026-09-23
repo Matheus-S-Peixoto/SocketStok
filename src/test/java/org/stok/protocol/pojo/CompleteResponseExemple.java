@@ -3,7 +3,7 @@ package org.stok.protocol.pojo;
 public class CompleteResponseExemple {
     private int statusCode;
     private String message;
-    private ResDataExample data;
+    private Object data;
 
     public int getStatusCode() {
         return statusCode;
@@ -21,11 +21,11 @@ public class CompleteResponseExemple {
         this.message = message;
     }
 
-    public ResDataExample getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(ResDataExample data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }
