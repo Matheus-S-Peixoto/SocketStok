@@ -1,9 +1,11 @@
 package org.stok.protocol.response;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.stok.exceptions.ResponseCodes;
 import org.stok.protocol.Actions;
 
 public class Response {
+    @JsonValue
     private ResponseCodes statusCode;
     private String message;
     private Object data;
@@ -15,7 +17,7 @@ public class Response {
         return res;
     }
 
-    public static Response success(Actions action, Object resData) {
+    public static Response success(Actions action, Object serviceResult) {
         Response res = new Response();
         switch (action) {
             case P_CREATE:
@@ -39,12 +41,12 @@ public class Response {
                 res.setMessage("Stok updated");
                 break;
         }
-        res.setData(resData);
+        res.setData(ResponseData.from(serviceResult));
 
         return res;
     }
 
-    private ResponseCodes getStatusCode() {
+    public ResponseCodes getStatusCode() {
         return statusCode;
     }
 
@@ -52,7 +54,7 @@ public class Response {
         this.statusCode = statusCode;
     }
 
-    private String getMessage() {
+    public String getMessage() {
         return message;
     }
 
@@ -60,7 +62,7 @@ public class Response {
         this.message = message;
     }
 
-    private Object getData() {
+    public Object getData() {
         return data;
     }
 

@@ -7,6 +7,7 @@ import org.stok.protocol.ProtocolParser;
 import org.stok.protocol.ValidateRequest;
 import org.stok.protocol.request.Request;
 import org.stok.protocol.response.Response;
+import org.stok.protocol.response.ResponseData;
 import org.stok.service.StokService;
 
 import java.io.BufferedReader;
@@ -49,6 +50,7 @@ public class ClientHandler implements Runnable {
 
                     Response res = Response.success(req.getAction(), serviceResult);
                     output.println(parser.parseResponse(res));
+
                 } catch (ProtocolException e) {
                     Response res = Response.error(e.getCode(), e.getMessage());
                     output.println(parser.parseResponse(res));

@@ -6,10 +6,7 @@ import org.stok.model.Product;
 import org.stok.protocol.request.RequestBody;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProductRepositoryTest {
     private final ProductRepository repo = new ProductRepository();
@@ -31,7 +28,7 @@ class ProductRepositoryTest {
 
     @Test
     void getStok() {
-        List<Product> stok = repo.getStok();
+        List<Product> stok = repo.findAll();
 
         for (Product product : stok) {
             System.out.println(product.getId());

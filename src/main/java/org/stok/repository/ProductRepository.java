@@ -48,7 +48,7 @@ public class ProductRepository {
         }
     }
 
-    public List<Product> getStok() {
+    public List<Product> findAll() {
         String query = "SELECT * FROM stok";
         List<Product> productList;
 
@@ -117,7 +117,7 @@ public class ProductRepository {
             pstmt.setString(2, req.getBody().getDescription());
             pstmt.setBigDecimal(3, req.getBody().getAmount());
             pstmt.setString(4, req.getBody().getCode());
-            pstmt.setInt(5, req.getBody().getQuantity());
+            pstmt.setObject(5, req.getBody().getQuantity());
             pstmt.setInt(6, req.getId());
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -202,13 +202,14 @@ public class ProductRepository {
     }
 
     public Product decrementQuantity(Integer id, Integer quantity) throws ServiceException {
-        String query = "UPDATE stok SET quantity = quantity - ? WHERE id = ? RETURNING id, name, quantity";
+        String query = "UPDATE stok SET quantity = quantity - ? WHERE id = ? AND quantity >= ? RETURNING id, name, quantity";
 
         try (Connection conn = DataSource.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, quantity);
             pstmt.setInt(2, id);
+            pstmt.setInt(3, quantity);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {

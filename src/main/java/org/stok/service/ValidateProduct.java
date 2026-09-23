@@ -3,7 +3,6 @@ package org.stok.service;
 import org.stok.exceptions.ResponseCodes;
 import org.stok.exceptions.ServiceException;
 import org.stok.protocol.request.Request;
-import org.stok.repository.ProductRepository;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -55,10 +54,10 @@ public class ValidateProduct {
             }
         }
         if (req.getBody().getAmount() != null) {
-            if (Objects.equals(req.getBody().getAmount(), new BigDecimal("0"))) {
+            if (req.getBody().getAmount().signum() <= 0) {
                 throw new ServiceException(
                         ResponseCodes.BAD_REQUEST,
-                        "Invalid Value: Amount cannot be 0"
+                        "Invalid Value: Amount cannot be 0 or negative"
                 );
             }
         }
@@ -81,14 +80,7 @@ public class ValidateProduct {
         }
     }
 
-    protected void validateDecrement(Request req, ProductRepository db) throws ServiceException {
-        Integer availableQuantity = db.getQuantityById(req.getId());
-        if (availableQuantity == null) {
-            throw new ServiceException(
-                 ResponseCodes.NOT_FOUND,
-                 "Could not find product with the requested id - " + req.getId()
-            );
-        }
+    protected void validateDecrement(Request req, Integer availableQuantity) throws ServiceException {
         if (req.getBody().getQuantity() > availableQuantity) {
             throw new ServiceException(
                     ResponseCodes.BAD_REQUEST,

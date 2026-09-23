@@ -12,9 +12,7 @@ public class ValidateRequest {
             case P_INFO -> validateInfoRequest(req);
             case P_EDIT -> validateEditRequest(req);
             case P_REMOVE -> validateRemoveRequest(req);
-            case S_ADD -> validateAddRequest(req);
-            case S_SELL -> validateSellRequest(req);
-            case S_LOSS -> validateLossRequest(req);
+            case S_ADD, S_SELL, S_LOSS -> validateStokActions(req);
             default -> throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Invalid action");
         };
     }
@@ -55,6 +53,9 @@ public class ValidateRequest {
         if (req.getId() == null) {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Missing value: id");
         }
+        if (req.getBody() == null) {
+            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Missing value: body");
+        }
         if (req.getBody().isEmpty()) {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Invalid field - \"body\" is empty");
         }
@@ -69,8 +70,8 @@ public class ValidateRequest {
         }
     }
 
-    private void validateAddRequest(Request req) throws ProtocolException {
-        String doesNotAccept = "S_ADD does not accept ";
+    private void validateStokActions(Request req) throws ProtocolException {
+        String doesNotAccept = "Stok Actions do not accept ";
 
         if (req.getId() == null) {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Missing value: id");
@@ -91,63 +92,7 @@ public class ValidateRequest {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "code");
         }
         if (req.getBody().getQuantity() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "S_ADD must have a valid \"quantity\" value");
-        } else if (req.getBody().getQuantity() <= 0) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "\"quantity\" value should be positive and bigger then 0");
-        }
-    }
-
-    private void validateSellRequest(Request req) throws ProtocolException {
-        String doesNotAccept = "S_SELL does not accept ";
-
-        if (req.getId() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Missing value: id");
-        }
-        if (req.getBody() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "S_SELL must have a valid body");
-        }
-        if (req.getBody().getName() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "name");
-        }
-        if (req.getBody().getDescription() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "description");
-        }
-        if (req.getBody().getAmount() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "amount");
-        }
-        if (req.getBody().getCode() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "code");
-        }
-        if (req.getBody().getQuantity() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "S_SELL must have a valid \"quantity\" value");
-        } else if (req.getBody().getQuantity() <= 0) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "\"quantity\" value should be positive and bigger then 0");
-        }
-    }
-
-    private void validateLossRequest(Request req) throws ProtocolException {
-        String doesNotAccept = "S_LOSS does not accept ";
-
-        if (req.getId() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Missing value: id");
-        }
-        if (req.getBody() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "S_LOSS must have a valid body");
-        }
-        if (req.getBody().getName() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "name");
-        }
-        if (req.getBody().getDescription() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "description");
-        }
-        if (req.getBody().getAmount() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "amount");
-        }
-        if (req.getBody().getCode() != null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, doesNotAccept + "code");
-        }
-        if (req.getBody().getQuantity() == null) {
-            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "S_LOSS must have a valid \"quantity\" value");
+            throw new ProtocolException(ResponseCodes.BAD_REQUEST, "Stok Actions must have a valid \"quantity\" value");
         } else if (req.getBody().getQuantity() <= 0) {
             throw new ProtocolException(ResponseCodes.BAD_REQUEST, "\"quantity\" value should be positive and bigger then 0");
         }

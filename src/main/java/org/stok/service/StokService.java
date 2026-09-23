@@ -21,8 +21,7 @@ public class StokService {
             case P_EDIT -> handleEdit(req);
             case P_REMOVE -> handleRemove(req);
             case S_ADD -> handleAdd(req);
-            case S_SELL -> handleSell(req);
-            case S_LOSS -> handleLoss(req);
+            case S_SELL, S_LOSS -> handleSellandLoss(req);
         };
     }
 
@@ -33,7 +32,7 @@ public class StokService {
 
     private Object handleInfo(Request req) throws ServiceException {
         if(req.getId() == null) {
-            return db.getStok();
+            return db.findAll();
         }
         return db.findProductById(req.getId());
     }
@@ -51,13 +50,10 @@ public class StokService {
         return db.incrementQuantity(req.getId(), req.getBody().getQuantity());
     }
 
-    private Product handleSell(Request req) throws ServiceException {
-        validator.validateDecrement(req, db);
-        return db.decrementQuantity(req.getId(), req.getBody().getQuantity());
-    }
+    private Product handleSellandLoss(Request req) throws ServiceException {
+        Integer availableQuantity = db.getQuantityById(req.getId());
 
-    private Product handleLoss(Request req) throws ServiceException {
-        validator.validateDecrement(req, db);
+        validator.validateDecrement(req, availableQuantity);
         return db.decrementQuantity(req.getId(), req.getBody().getQuantity());
     }
 }
