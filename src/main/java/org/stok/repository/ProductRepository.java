@@ -44,11 +44,14 @@ public class ProductRepository {
                         "Product was not created");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
-    public List<Product> findAll() {
+    public List<Product> findAll() throws ServiceException {
         String query = "SELECT * FROM stok";
         List<Product> productList;
 
@@ -72,7 +75,10 @@ public class ProductRepository {
             return productList;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
@@ -103,7 +109,10 @@ public class ProductRepository {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
@@ -138,7 +147,10 @@ public class ProductRepository {
                         "Could not find a product with the id: " + req.getId());
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
@@ -169,7 +181,10 @@ public class ProductRepository {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
@@ -197,7 +212,10 @@ public class ProductRepository {
                         "Could not find a product with the id: " + id);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
@@ -226,7 +244,10 @@ public class ProductRepository {
                         "Could not find a product with the id: " + id);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 
@@ -247,7 +268,10 @@ public class ProductRepository {
                     ResponseCodes.NOT_FOUND,
                     "Could not find a product with the id: " + id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(
+                    ResponseCodes.INTERNAL_ERROR,
+                    e.getMessage()
+            );
         }
     }
 }

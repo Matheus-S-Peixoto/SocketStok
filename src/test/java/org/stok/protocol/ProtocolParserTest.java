@@ -146,7 +146,7 @@ class ProtocolParserTest {
     void parseResponseScenarioEdit() throws JsonProcessingException {
         ResDataExample data = new ResDataExample();
         data.setDescription("Amortecedor dianteiro esquerdo da porche Cayenne 2012");
-        data.setAmount(new BigDecimal("2445.99"));
+        data.setAmount(new BigDecimal("2000"));
         CompleteResponseExemple res = new CompleteResponseExemple();
         res.setStatusCode(200);
         res.setMessage("OK");

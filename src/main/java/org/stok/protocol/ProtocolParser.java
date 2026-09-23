@@ -1,6 +1,7 @@
 package org.stok.protocol;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 
@@ -13,6 +14,7 @@ public class ProtocolParser {
         objMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
         objMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
         objMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objMapper.enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN);
     }
 
     protected JsonNode jsonToNode(String req) throws JsonProcessingException {

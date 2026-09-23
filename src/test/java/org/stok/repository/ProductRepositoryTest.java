@@ -3,6 +3,8 @@ package org.stok.repository;
 import org.junit.jupiter.api.Test;
 import org.stok.exceptions.ServiceException;
 import org.stok.model.Product;
+import org.stok.protocol.Actions;
+import org.stok.protocol.request.Request;
 import org.stok.protocol.request.RequestBody;
 
 import java.math.BigDecimal;
@@ -27,7 +29,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    void getStok() {
+    void getStok() throws ServiceException {
         List<Product> stok = repo.findAll();
 
         for (Product product : stok) {
@@ -35,6 +37,29 @@ class ProductRepositoryTest {
             System.out.println(product.getName());
             System.out.println(product.getAmount());
         }
+    }
+
+    @Test
+    void updateItem() throws ServiceException {
+        RequestBody reqBody = new RequestBody();
+        reqBody.setAmount(new BigDecimal("2000"));
+        Request req = new Request();
+        req.setAction(Actions.P_EDIT);
+        req.setId(54);
+        req.setBody(reqBody);
+
+        Product product = repo.updateProduct(req);
+
+        System.out.println(product.getId());
+        System.out.println(product.getName());
+        System.out.println(product.getAmount());
+    }
+
+    @Test
+    void findById() throws ServiceException {
+        Product product = repo.findProductById(54);
+
+        System.out.println(product.getAmount());
     }
 
 }
