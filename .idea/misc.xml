@@ -11,7 +11,7 @@
   <component name="PrintToLogpointModuleInspectionState">
     <option name="disabledModuleNames">
       <set>
-        <option value="SocketStok" />
+        <option value="SocketStokServer" />
       </set>
     </option>
   </component>
